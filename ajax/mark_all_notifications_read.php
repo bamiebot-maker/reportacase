@@ -17,7 +17,7 @@ if ($_POST && isset($_POST['user_id'])) {
 
     $query = "UPDATE notifications SET is_read = 1 WHERE user_id = :user_id";
     $stmt = $db->prepare($query);
-    $stmt->bindParam(":user_id", $_POST['user_id']);
+    $stmt->bindParam(":user_id", $_SESSION['user_id']);
     
     if ($stmt->execute()) {
         echo 'success';
