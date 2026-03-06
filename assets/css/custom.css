@@ -1,0 +1,146 @@
+:root {
+    --fud-primary: #003366;
+    --fud-secondary: #FF9900;
+    --fud-accent: #6699CC;
+}
+
+.bg-primary { 
+    background-color: var(--fud-primary) !important; 
+}
+
+.btn-primary { 
+    background-color: var(--fud-primary); 
+    border-color: var(--fud-primary); 
+}
+
+.btn-primary:hover {
+    background-color: #002244;
+    border-color: #002244;
+}
+
+.btn-warning { 
+    background-color: var(--fud-secondary); 
+    border-color: var(--fud-secondary); 
+    color: #000;
+}
+
+.btn-warning:hover {
+    background-color: #e68a00;
+    border-color: #e68a00;
+    color: #000;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.9)), 
+                url('../images/fud-gate.jpg') center/cover no-repeat;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    border-radius: 0.5rem;
+}
+
+.card-header {
+    background-color: var(--fud-primary);
+    color: white;
+    font-weight: 600;
+    border-radius: 0.5rem 0.5rem 0 0 !important;
+}
+
+.sidebar {
+    min-height: 100vh;
+    background-color: var(--fud-primary);
+}
+
+.stat-card {
+    border-left: 4px solid var(--fud-accent);
+}
+
+.table th {
+    background-color: var(--fud-primary);
+    color: white;
+}
+
+/* Notification badge animation */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.badge.bg-danger {
+    animation: pulse 2s infinite;
+    font-size: 0.7em;
+}
+
+/* Timeline styles */
+.timeline {
+    position: relative;
+    padding-left: 30px;
+}
+.timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+.timeline-marker {
+    position: absolute;
+    left: -30px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #6c757d;
+}
+.timeline-item.completed .timeline-marker {
+    background-color: #198754;
+}
+.timeline-content {
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+/* DataTables customization */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_processing,
+.dataTables_wrapper .dataTables_paginate {
+    color: #333;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0.5em 1em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 70vh;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    .navbar, .btn, .alert {
+        display: none !important;
+    }
+    
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+    }
+}
