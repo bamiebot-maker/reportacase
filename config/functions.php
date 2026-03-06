@@ -29,7 +29,8 @@ function sanitizeInput($data) {
     if ($data === null) {
         return '';
     }
-    return htmlspecialchars(strip_tags(trim($data)));
+    // Store raw data (PDO handles SQL injection). Escaping should be done on output.
+    return trim($data);
 }
 
 function redirect($url) {

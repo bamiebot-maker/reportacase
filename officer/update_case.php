@@ -41,6 +41,10 @@ $success = '';
 
 if ($_POST) {
     $status = sanitizeInput($_POST['status']);
+    $valid_statuses = ['pending', 'investigating', 'resolved'];
+    if (!in_array($status, $valid_statuses)) {
+        $status = 'pending';
+    }
     $notes = sanitizeInput($_POST['notes']);
 
     // Update case

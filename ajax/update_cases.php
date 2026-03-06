@@ -23,6 +23,13 @@ if ($_POST && isset($_POST['case_id'])) {
         $status = sanitizeInput($_POST['status']);
         $notes = sanitizeInput($_POST['notes'] ?? '');
         
+        // Strict enum validation
+        $valid_statuses = ['pending', 'investigating', 'resolved'];
+        if (!in_array($status, $valid_statuses)) {
+            echo json_encode(['success' => false, 'message' => 'Invalid status provided.']);
+            exit();
+        }
+        
         // Validate case ownership (for officers)
         if ($_SESSION['role'] === 'Officer') {
             $check_query = "SELECT id FROM cases WHERE id = :case_id AND officer_id = :officer_id";

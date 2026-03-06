@@ -22,6 +22,10 @@ if ($_POST) {
         $category_id = intval($_POST['category_id']);
         $description = sanitizeInput($_POST['description']);
         $priority = sanitizeInput($_POST['priority'] ?? 'medium');
+        $valid_priorities = ['low', 'medium', 'high'];
+        if (!in_array($priority, $valid_priorities)) {
+            $priority = 'medium';
+        }
         
         // Validate required fields
         if (empty($department) || empty($location) || empty($category_id) || empty($description)) {
