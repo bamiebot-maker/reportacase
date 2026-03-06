@@ -247,6 +247,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!form.checkValidity()) {
             event.preventDefault();
             event.stopPropagation();
+        } else {
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
         }
         form.classList.add('was-validated');
     });

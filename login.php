@@ -142,6 +142,15 @@ document.getElementById('togglePassword').addEventListener('click', function() {
         icon.classList.replace('fa-eye-slash', 'fa-eye');
     }
 });
+
+// Provide loading state on submit
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    if (this.checkValidity()) {
+        const submitBtn = this.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+    }
+});
 </script>
 
 <?php include 'includes/footer.php'; ?>
