@@ -40,8 +40,11 @@ $error = '';
 $success = '';
 
 if ($_POST) {
-    $status = sanitizeInput($_POST['status']);
-    $valid_statuses = ['pending', 'investigating', 'resolved'];
+    if (!isset($_POST['csrf_token']) || !Auth::validateCSRFToken($_POST['csrf_token'])) {
+        $error = "Invalid security token. Please refresh and try again.";
+    } else {
+        $status = sanitizeInput($_POST['status']);
+        $valid_statuses = ['pending', 'investigating', 'resolved'];
     if (!in_array($status, $valid_statuses)) {
         $status = 'pending';
     }
@@ -68,7 +71,8 @@ if ($_POST) {
         $stmt->execute();
         $case = $stmt->fetch(PDO::FETCH_ASSOC);
     } else {
-        $error = "Error updating case. Please try again.";
+            $error = "Error updating case. Please try again.";
+        }
     }
 }
 ?>
@@ -177,6 +181,7 @@ if ($_POST) {
                     <?php endif; ?>
 
                     <form method="POST" class="needs-validation" novalidate>
+                        <input type="hidden" name="csrf_token" value="<?= Auth::generateCSRFToken() ?>">
                         <div class="mb-3">
                             <label for="status" class="form-label">Case Status <span class="text-danger">*</span></label>
                             <select class="form-select" id="status" name="status" required>

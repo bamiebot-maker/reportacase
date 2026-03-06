@@ -12,11 +12,14 @@ if (Auth::isLoggedIn()) {
 $error = '';
 
 if ($_POST) {
-    $username = sanitizeInput($_POST['username']);
-    $password = $_POST['password'];
-    
-    $database = new Database();
-    $db = $database->getConnection();
+    if (!isset($_POST['csrf_token']) || !Auth::validateCSRFToken($_POST['csrf_token'])) {
+        $error = 'Invalid security token. Please refresh and try again.';
+    } else {
+        $username = sanitizeInput($_POST['username']);
+        $password = $_POST['password'];
+        
+        $database = new Database();
+        $db = $database->getConnection();
     
     if ($db) {
         $query = "SELECT id, name, username, password, role, status FROM users WHERE username = :username AND status = 'active'";
@@ -80,6 +83,7 @@ if ($_POST) {
                     <?php endif; ?>
                     
                     <form method="POST" id="loginForm">
+                        <input type="hidden" name="csrf_token" value="<?= Auth::generateCSRFToken() ?>">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <div class="input-group">

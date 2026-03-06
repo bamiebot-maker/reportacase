@@ -55,10 +55,13 @@ $error = '';
 $success = '';
 
 if ($_POST) {
-    $officer_id = intval($_POST['officer_id']);
-    $notes = sanitizeInput($_POST['notes']);
+    if (!isset($_POST['csrf_token']) || !Auth::validateCSRFToken($_POST['csrf_token'])) {
+        $error = "Invalid security token. Please refresh and try again.";
+    } else {
+        $officer_id = intval($_POST['officer_id']);
+        $notes = sanitizeInput($_POST['notes']);
 
-    if (empty($officer_id)) {
+        if (empty($officer_id)) {
         $error = "Please select an officer to assign this case to";
     } else {
         if ($case_id > 0) {
@@ -105,6 +108,7 @@ if ($_POST) {
         } else {
             $error = "Error assigning case. Please try again.";
         }
+    }
     }
 }
 ?>
@@ -192,6 +196,7 @@ if ($_POST) {
                     <?php endif; ?>
 
                     <form method="POST" class="needs-validation" novalidate>
+                        <input type="hidden" name="csrf_token" value="<?= Auth::generateCSRFToken() ?>">
                         <div class="mb-3">
                             <label for="officer_id" class="form-label">Assign to Officer <span class="text-danger">*</span></label>
                             <select class="form-select" id="officer_id" name="officer_id" required>
