@@ -188,7 +188,7 @@ $recent_notifications = $notifications_stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <div class="fw-bold"><?= htmlspecialchars($notification['message']) ?></div>
                                     <small class="text-muted"><?= formatDate($notification['created_at']) ?></small>
                                 </div>
-                                <button class="btn btn-sm btn-outline-secondary" onclick="markNotificationRead(<?= $notification['id'] ?>)">
+                                <button class="btn btn-sm btn-outline-secondary" onclick="markNotificationRead(<?= $notification['id'] ?>, this)">
                                     <i class="fas fa-check"></i>
                                 </button>
                             </div>
@@ -225,13 +225,13 @@ $recent_notifications = $notifications_stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <script>
-function markNotificationRead(notificationId) {
+function markNotificationRead(notificationId, btnElement) {
     $.ajax({
         url: '../ajax/mark_notification_read.php',
         type: 'POST',
         data: { notification_id: notificationId },
         success: function() {
-            location.reload();
+            $(btnElement).closest('.list-group-item').fadeOut(300, function() { $(this).remove(); });
         }
     });
 }
@@ -240,9 +240,8 @@ function markAllNotificationsRead() {
     $.ajax({
         url: '../ajax/mark_all_notifications_read.php',
         type: 'POST',
-        data: { user_id: <?= $_SESSION['user_id'] ?> },
         success: function() {
-            location.reload();
+            $('.list-group-item').fadeOut(300, function() { $(this).remove(); });
         }
     });
 }
