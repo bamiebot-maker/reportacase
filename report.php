@@ -155,44 +155,20 @@ document.getElementById('reportForm').addEventListener('submit', function(e) {
     if (!this.checkValidity()) {
         e.preventDefault();
         e.stopPropagation();
+        
+        // Disable submit button on valid submission to prevent duplicates
+        if (this.checkValidity()) {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+        }
+    } else {
+        // Validation passed, show loading state
+        const submitBtn = this.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
     }
     this.classList.add('was-validated');
-});
-
-// Auto-save form data to localStorage
-const form = document.getElementById('reportForm');
-const formData = new FormData(form);
-
-// Save form data when inputs change
-form.addEventListener('input', function() {
-    const formData = {
-        reporter_name: form.reporter_name.value,
-        contact: form.contact.value,
-        department: form.department.value,
-        location: form.location.value,
-        category_id: form.category_id.value,
-        description: form.description.value,
-        priority: form.priority.value
-    };
-    localStorage.setItem('reportFormData', JSON.stringify(formData));
-});
-
-// Load saved form data
-window.addEventListener('load', function() {
-    const savedData = localStorage.getItem('reportFormData');
-    if (savedData) {
-        const formData = JSON.parse(savedData);
-        for (const key in formData) {
-            if (form[key]) {
-                form[key].value = formData[key];
-            }
-        }
-    }
-});
-
-// Clear saved data on successful submission
-form.addEventListener('submit', function() {
-    localStorage.removeItem('reportFormData');
 });
 </script>
 

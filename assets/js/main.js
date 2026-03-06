@@ -9,32 +9,7 @@ $(document).ready(function() {
         $(this).addClass('was-validated');
     });
 
-    // Auto-save form data
-    $('.autosave-form').on('input', function() {
-        const formData = {};
-        $(this).find('input, select, textarea').each(function() {
-            if (this.name) {
-                formData[this.name] = $(this).val();
-            }
-        });
-        localStorage.setItem('formAutosave', JSON.stringify(formData));
-    });
 
-    // Load auto-saved form data
-    const savedFormData = localStorage.getItem('formAutosave');
-    if (savedFormData) {
-        const formData = JSON.parse(savedFormData);
-        $('.autosave-form').find('input, select, textarea').each(function() {
-            if (this.name && formData[this.name]) {
-                $(this).val(formData[this.name]);
-            }
-        });
-    }
-
-    // Clear auto-saved data on successful form submission
-    $('.autosave-form').on('submit', function() {
-        localStorage.removeItem('formAutosave');
-    });
 
     // Real-time search for tables
     $('.table-search').on('keyup', function() {
